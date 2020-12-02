@@ -1,7 +1,7 @@
 fun main(args: Array<String>) {
     val inputStrings = object {}.javaClass.getResource("input.txt").readText(Charsets.UTF_8).split("\n")
 
-    // part 1 example: 1-3 b: bbbaf, determine whether letter b occurs in string 1-3 times
+    // part 1 example: 1-3 b: bbbag, determine whether letter b occurs in string 1-3 times
     val count = inputStrings.asSequence().filter { it != "" }
         .map { it.split(" ") }
         .map { Triple(convertStringToRange(it[0]), it[1].first(), it[2]) }
