@@ -10,6 +10,7 @@ fun main(args: Array<String>) {
 
     println("Part 1: $part1")
 
+    // part 2 example: 1-3 b: bbbag, determine whether letter b occurs in the index 1 or 3 but not both
     val part2 = inputStrings.asSequence().filter { it != "" }
             .map { it.split(" ") }
             .map { Triple(convertStringToZeroIndexedPair(it[0]), it[1].first(), it[2]) }
