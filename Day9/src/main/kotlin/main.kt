@@ -1,12 +1,10 @@
 fun main(args: Array<String>) {
-    val input = object {}.javaClass.getResource("input.txt").readText(Charsets.UTF_8).split("\n")
+    val input = object {}.javaClass.getResource("input.txt").readText(Charsets.UTF_8).split("\n").map { it.toLong() }
 
-    val intInputs = input.map { it.toLong() }
-
-    val brokenNumber = findNumberThatBreaksPreamble(intInputs, 25)
+    val brokenNumber = findNumberThatBreaksPreamble(input, 25)
     println("part1 $brokenNumber")
 
-    val part2 = findSet(intInputs, brokenNumber)
+    val part2 = findSet(input, brokenNumber)
     println("part2 $part2")
 }
 
