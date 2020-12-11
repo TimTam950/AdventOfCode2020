@@ -1,13 +1,13 @@
 fun main(args: Array<String>) {
     var input = object {}.javaClass.getResource("input.txt").readText(Charsets.UTF_8).split("\n").toMutableList()
 
-    var finalResult = mutableListOf<String>()
+    var finalResult: MutableList<String>
 
     while(true){
         val newSeats = mutableListOf<String>()
-        for(rowIndex in 0..input[0].length - 1) {
+        for(rowIndex in 0..input.size - 1) {
             var newRow = ""
-            for(seatIndex in 0..input.size - 1){
+            for(seatIndex in 0..input[0].length - 1){
                 val updatedSeat = checkSeat(input, seatIndex to rowIndex)
                 newRow = newRow.plus(updatedSeat)
             }
@@ -32,7 +32,7 @@ fun checkSeat(seats: List<String>, currentSeat: Pair<Int, Int>): String {
     val statusOfCurrentSeat = seats[currentSeat.second][currentSeat.first].toString()
 
     val adjacentSeats = getAdjacentSeats(currentSeat, indexedLengthOfRow, indexedLengthOfColumn)
-
+    println(currentSeat)
     return when(statusOfCurrentSeat) {
         "L" -> {
             val unoccupiedSeats = adjacentSeats.map { seats[it.second][it.first].toString() }
@@ -53,16 +53,16 @@ fun checkSeat(seats: List<String>, currentSeat: Pair<Int, Int>): String {
 private fun getAdjacentSeats(currentSeat: Pair<Int, Int>, indexedLengthOfRow: Int, indexedLengthOfColumn: Int) = when {
         currentSeat == Pair(0, 0) -> listOf(0 to 1, 1 to 0, 1 to 1)
 
-        currentSeat == Pair(0, indexedLengthOfRow) ->
+        currentSeat == Pair(indexedLengthOfRow, 0) ->
             listOf(0 to indexedLengthOfRow - 1, 1 to indexedLengthOfRow, 1 to indexedLengthOfRow - 1)
 
-        currentSeat == Pair(indexedLengthOfColumn, 0) ->
-            listOf(indexedLengthOfColumn - 1 to 0, indexedLengthOfColumn - 1 to 1, indexedLengthOfColumn to 1)
+        currentSeat == Pair(0, indexedLengthOfColumn) ->
+            listOf(0 to indexedLengthOfColumn - 1, 1 to indexedLengthOfColumn - 1, 1 to indexedLengthOfColumn)
 
-        currentSeat == Pair(indexedLengthOfColumn, indexedLengthOfRow) ->
+        currentSeat == Pair(indexedLengthOfRow, indexedLengthOfColumn) ->
             listOf(
-                indexedLengthOfColumn - 1 to indexedLengthOfRow, indexedLengthOfColumn - 1 to indexedLengthOfRow - 1,
-                indexedLengthOfColumn to indexedLengthOfRow - 1
+                indexedLengthOfRow to indexedLengthOfColumn - 1, indexedLengthOfRow - 1 to indexedLengthOfColumn - 1,
+                    indexedLengthOfRow - 1 to indexedLengthOfColumn
             )
 
         currentSeat.first == 0 ->
@@ -74,7 +74,7 @@ private fun getAdjacentSeats(currentSeat: Pair<Int, Int>, indexedLengthOfRow: In
                 currentSeat.first to currentSeat.second + 1
             )
 
-        currentSeat.first == indexedLengthOfRow ->
+        currentSeat.first == indexedLengthOfRow && currentSeat.second != 0 ->
             listOf(
                 currentSeat.first to currentSeat.second - 1,
                 currentSeat.first - 1 to currentSeat.second - 1,
